@@ -25,135 +25,112 @@ public class SetHelper {
 
 	return new Card(number, color, fill, shape);
     }
+
+    private static final String cardSyntax = new String("Syntax:\n"
+			   +"One\t\tTwo\t\tThree\n"
+			   +"Purple\t\tRed\t\tGreen\n"
+			   +"Open\t\tStriped\t\tSolid\n"
+			   +"Squiggle\t\tOval\t\tDiamond\n"
+			   +"Example: One Red Striped Diamond\n"
+			   +"Type \'done\' to return to main menu\n"
+							  +"Card: ");
         
     /** Adds cards to Table */
     public static void addCards(){
 	Scanner scan = new Scanner(System.in);
+	scan.useDelimiter("\\n");
+	
+	String pattern = "^[a-zA-Z1-3]+ ([a-zA-Z]+ ){2,2}[a-zA-Z]+$";
 	int cardsAdded = 0;
 
-	System.out.print("Add a card. Syntax:\n"
-			   +"1\t\t2\t\t3\n"
-			   +"One\t\tTwo\t\tThree\n"
-			   +"Purple\t\tRed\t\tGreen\n"
-			   +"Clear\t\tLined\t\tFilled\n"
-			   +"Squigle\t\tOval\t\tDiamond\n"
-			   +"Example: One Red Lined Diamond = 1223\n"
-			   +"Type \'done\' to return to main menu\n"
-			   +"Card: ");
+	System.out.print("Add a card. " + cardSytax);
 	while(true){
-	    if(scan.hasNextInt()){
-		try{
-		    int intCard = (Integer) scan.nextInt();
-		    Integer integerCard;
-		    String cardString;
 
-		    intCard -= 1111;
-		    if(intCard == 0){
-			cardString = ("0000");
+	    String cardString = scan.nextLine();
+	    
+	    
+	    if(cardString.matches(pattern)){
+		Card newCard;
+		
+		if(cardString.matches(pattern)){			
+		    /* new card to be added to table */
+		    try{
+			newCard = Card.stringToCard(cardString);
+			
+			/* if contains new card print error */
+			if(table.contains(newCard)){
+			    System.out.print("Error. Card exists.\nPlease enter a valid Card: ");
+			}
+			/* else add to table and increment number of cards added count */
+			else{
+			    table.addCard(newCard);
+			    cardsAdded++;
+			    System.out.print(newCard.toString() + "\nNext card: ");
+			}
 		    }
-		    else if (intCard < 10){
-			integerCard = new Integer(intCard);
-			cardString = ("000" + integerCard.toString());
+		    catch (IllegalArgumentException i){
+			System.out.print("Please enter a valid card: ");
 		    }
-		    else if (intCard < 100){
-			integerCard = new Integer(intCard);
-			cardString = ("00" + integerCard.toString());
-		    }
-		    else if(intCard < 1000){
-			integerCard = new Integer(intCard);
-			cardString = ("0" + integerCard.toString());
-		    }
-		    else
-			cardString = (new Integer(intCard)).toString();
-
-		    Card newCard = strToCard(cardString);
-		    
-		    if(table.contains(newCard)){
-			System.out.print("Error. Card exists. Card: ");
-		    }
-		    else{
-			table.addCard(newCard);
-			cardsAdded++;
-			System.out.print(newCard.toString() + " Next card: ");
-		    }
-		}
-		catch(IllegalArgumentException i){
-		    System.out.print("Error. Please enter a valid card: ");
 		}
 	    }
-	    else if(scan.next().toLowerCase().trim().equals("done")){
+	    else if(cardString.toLowerCase().trim().equals("done")){
 		System.out.print(cardsAdded);
 		System.out.println(" card(s) added");
 		break;
 	    }
-	    else
-		System.out.print("Error. Please enter a valid card: ");
+	    else{
+		System.out.print("Invalid Entry. Please enter a valid card: ");
+	    }
 	}
     }
-
+    
     /** Remove cards from Table */
     public static void removeCards(){
 	Scanner scan = new Scanner(System.in);
+	scan.useDelimiter("\\n");
+	
+	String pattern = "^[a-zA-Z1-3]+ ([a-zA-Z]+ ){2,2}[a-zA-Z]+$";
 	int cardsRemoved = 0;
 
-	System.out.print("Remove a card. Syntax:\n"
-			   +"1\t\t2\t\t3\n"
-			   +"One\t\tTwo\t\tThree\n"
-			   +"Purple\t\tRed\t\tGreen\n"
-			   +"Clear\t\tLined\t\tFilled\n"
-			   +"Squigle\t\tOval\t\tDiamond\n"
-			   +"Example: One Red Lined Diamond = 1223\n"
-			   +"Type \'done\' to return to main menu\n"
-			   +"Card: ");
+	System.out.print("Remove a card. " + cardSyntax);
 	while(true){
-	    if(scan.hasNextInt()){
-		try{
-		    int intCard = (Integer) scan.nextInt();
-		    Integer integerCard;
-		    String cardString;
 
-		    intCard -= 1111;
-		    if(intCard == 0){
-			cardString = ("0000");
+	    String cardString = scan.nextLine();
+	    
+	    
+	    if(cardString.matches(pattern)){
+		Card newCard;
+		
+		if(cardString.matches(pattern)){			
+		    /* new card to be added to table */
+		    try{
+			newCard = Card.stringToCard(cardString);
+			
+			/* if doesn't contain card print error */
+			if(!table.contains(newCard)){
+			    System.out.print("Error. Card doesn't exist.\nPlease enter a valid card: ");
+			}
+			/* else remove from table and increment number of cards removed count */
+			else{
+			    table.removeCard(newCard);
+			    cardsRemoved++;
+			    System.out.print(newCard.toString() + "\nNext card: ");
+			}
 		    }
-		    else if (intCard < 10){
-			integerCard = new Integer(intCard);
-			cardString = ("000" + integerCard.toString());
+		    catch (IllegalArgumentException i){
+			System.out.print("Please enter a valid card: ");
 		    }
-		    else if (intCard < 100){
-			integerCard = new Integer(intCard);
-			cardString = ("00" + integerCard.toString());
-		    }
-		    else if(intCard < 1000){
-			integerCard = new Integer(intCard);
-			cardString = ("0" + integerCard.toString());
-		    }
-		    else
-			cardString = (new Integer(intCard)).toString();
-
-		    Card newCard = strToCard(cardString);
-		    
-		    if(!(table.contains(newCard))){
-			System.out.print("Error. Card exists doesn't. Card: ");
-		    }
-		    else{
-			table.removeCard(newCard);
-			cardsRemoved++;
-			System.out.print(newCard.toString() + " Next card: ");
-		    }
-		}
-		catch(IllegalArgumentException i){
-		    System.out.print("Error. Please enter a valid card: ");
 		}
 	    }
-	    else if(scan.next().toLowerCase().trim().equals("done")){
+	    else if(cardString.toLowerCase().trim().equals("done")){
 		System.out.print(cardsRemoved);
 		System.out.println(" card(s) removed");
 		break;
 	    }
-	    else
-		System.out.print("Error. Please enter a valid card: ");
-	}	
+	    else{
+		System.out.print("Invalid Entry. Please enter a valid card: ");
+	    }
+	}
     }
 
     /** Print the Cards in the Table */
@@ -184,7 +161,7 @@ public class SetHelper {
 	    System.out.print("Set ");
 	    System.out.print(++count);
 	    System.out.println(":");
-	    System.out.println(((Table) i.next()).toString());
+	    System.out.println(((CardGroup) i.next()).toString());
 	}
     }
     

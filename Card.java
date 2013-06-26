@@ -37,7 +37,7 @@ public class Card {
 	if(number < MIN_AT || number > MAX_AT || color < MIN_AT
 	   || color > MAX_AT || shape < MIN_AT || shape > MAX_AT
 	   || fill < MIN_AT || fill > MAX_AT)
-	    throw new IllegalArgumentException("Please Enter Valid Arguments");
+	    throw new IllegalArgumentException("Invalid card arguments");
 
 	this.number = number;
 	this.color = color;
@@ -106,6 +106,49 @@ public class Card {
 	    return true;
     }
 
+    /** stringToCard function
+     * @return Card based on String in form "number color shading symbol"
+     */
+    public static Card stringToCard(String cardString){
+	    int cNumber = -1;
+	    int cColor = -1;
+	    int cShading = -1;
+	    int cSymbol = -1;
+	    
+	    /*determine new card integers */
+	    String parts[] = cardString.toLowerCase().split(" ");
+	    
+	    if (parts[0].equals("1") || parts[0].equals("one"))
+		cNumber = 0;
+	    else if (parts[0].equals("2") || parts[0].equals("two"))
+		cNumber = 1;
+	    else if (parts[0].equals("3") || parts[0].equals("three"))
+		cNumber = 2;
+	    
+	    if (parts[1].equals("purple"))
+		cColor = 0;
+	    else if (parts[1].equals("red"))
+		cColor = 1;
+	    else if (parts[1].equals("green"))
+		cColor = 2;
+	    
+	    if (parts[2].equals("clear") || parts [2].equals("open"))
+		cShading = 0;
+	    else if (parts[2].equals("striped") || parts[2].equals("lined"))
+		cShading = 1;
+	    else if (parts[2].equals("solid") || parts[2].equals("filled"))
+		cShading = 2;
+	    
+	    if (parts[3].equals("squiggle"))
+		cSymbol = 0;
+	    else if (parts[3].equals("diamond"))
+		cSymbol = 1;
+	    else if (parts[3].equals("oval"))
+		cSymbol = 2;
+	    
+	    return new Card(cNumber, cColor, cShading, cSymbol);
+    }
+
     /** toString function
      * @return String of card
      */
@@ -113,32 +156,32 @@ public class Card {
 	
 	StringBuilder cardStringBuild = new StringBuilder();
 	if(number == 0)
-	    cardStringBuild.append("<One ");
+	    cardStringBuild.append("One ");
 	else if(number == 1)
-	    cardStringBuild.append("<Two ");
+	    cardStringBuild.append("Two ");
 	else
-	    cardStringBuild.append("<Three ");
+	    cardStringBuild.append("Three ");
 
 	if(color == 0)
-	    cardStringBuild.append("purple ");
+	    cardStringBuild.append("Purple ");
 	else if(color == 1)
-	    cardStringBuild.append("red ");
+	    cardStringBuild.append("Red ");
 	else
-	    cardStringBuild.append("green ");
+	    cardStringBuild.append("Green ");
 
 	if(fill == 0)
-	    cardStringBuild.append("clear ");
+	    cardStringBuild.append("Open ");
 	else if(fill == 1)
-	    cardStringBuild.append("lined ");
+	    cardStringBuild.append("Striped ");
 	else
-	    cardStringBuild.append("filled ");
+	    cardStringBuild.append("Solid ");
 
 	if(shape == 0)
-	    cardStringBuild.append("squigle(s)>");
+	    cardStringBuild.append("Squiggle(s)");
 	else if(shape == 1)
-	    cardStringBuild.append("oval(s)>");
+	    cardStringBuild.append("Diamond(s)");
 	else
-	    cardStringBuild.append("diamond(s)>");
+	    cardStringBuild.append("Oval(s)");
 
 	return cardStringBuild.toString();
     }

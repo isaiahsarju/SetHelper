@@ -95,7 +95,7 @@ public class CardGroup{
 
 	if (this == cardGroup)
 	    return true;
-	else if(cards== null || getClass() != cardGroup.getClass())
+	else if(cards == null || getClass() != cardGroup.getClass())
 	    return false;
 
 	final CardGroup cardFinal = (CardGroup) cardGroup;
